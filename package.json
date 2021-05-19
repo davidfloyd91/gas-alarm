@@ -1,0 +1,15 @@
+{
+  "name": "gas-alarm",
+  "version": "1.0.0",
+  "description": "if gas is cheap, rejoice",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node gasAlarm.js"
+  },
+  "dependencies": {
+    "node-notifier": "^9.0.1",
+    "web3": "^1.3.6"
+  },
+  "type": "module"
+}
