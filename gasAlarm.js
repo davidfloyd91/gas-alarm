@@ -31,19 +31,26 @@ const threshold = thresholdArg ? parseInt(thresholdArg, 10) : 46;
 const TEN_MINUTES = 10 * 60 * 1000;
 
 setInterval(async () => {
-    const rawGasPrice = await getGasPrice();
-    const rawGasPriceInGwei = rawGasPrice && fromWei(rawGasPrice, 'gwei');
-    const gasPrice = rawGasPriceInGwei && parseInt(rawGasPriceInGwei, 10);
-    const shouldRejoice = gasPrice && 0 < gasPrice && gasPrice < threshold;
+  let rawGasPrice;
 
-    console.log({ time: new Date(), gasPrice, threshold, shouldRejoice });
+  try {
+    rawGasPrice = await getGasPrice();
+  } catch (err) {
+    console.log("couldn't get gas price sry", err);
+  }
 
-    if (shouldRejoice) {
-        notifier.notify({
-            title: "ga$ss$s",
-            message: `⛽️ is cheap 🐕 it's like ${gasPrice} 🐕`,
-            sound: true,
-            timeout: 15,
-        });
-    }
+  const rawGasPriceInGwei = rawGasPrice && fromWei(rawGasPrice, "gwei");
+  const gasPrice = rawGasPriceInGwei && parseInt(rawGasPriceInGwei, 10);
+  const shouldRejoice = gasPrice && 0 < gasPrice && gasPrice < threshold;
+
+  console.log({ time: new Date(), gasPrice, threshold, shouldRejoice });
+
+  if (shouldRejoice) {
+    notifier.notify({
+      title: "ga$ss$s",
+      message: `⛽️ is cheap 🐕 it's like ${gasPrice} 🐕`,
+      sound: true,
+      timeout: 15,
+    });
+  }
 }, TEN_MINUTES);
